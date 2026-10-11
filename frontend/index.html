@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Product Matcher - E-Commerce Product Entity Resolution
+  </title>
+
+  <meta name="description"
+    content="Product Matcher identifies matching e-commerce product listings using DSA-based entity resolution.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <!-- =========================================================
+       APPLICATION
+  ========================================================== -->
+
+  <div class="app-shell">
+
+
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
+
+    <aside class="sidebar">
+
+      <!-- BRAND -->
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+
+        <div class="brand-text">
+          <strong>Product Matcher</strong>
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+      <div class="sidebar-section-title">
+        NAVIGATION
+      </div>
+
+
+      <nav class="sidebar-nav">
+
+        <button class="nav-item active" data-view="home" onclick="switchView('home')">
+          <span class="nav-icon">🏠</span>
+          <span>Home</span>
+        </button>
+
+
+        <button class="nav-item" data-view="dashboard" onclick="switchView('dashboard')">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </button>
+
+
+        <button class="nav-item" data-view="products" onclick="switchView('products')">
+          <span class="nav-icon">📦</span>
+          <span>Products</span>
+        </button>
+
+
+        <button class="nav-item" data-view="matchListing" onclick="switchView('matchListing')">
+          <span class="nav-icon">🔍</span>
+          <span>Product Matcher</span>
+          <span class="nav-live">Live</span>
+        </button>
+
+
+        <button class="nav-item" data-view="about" onclick="switchView('about')">
+          <span class="nav-icon">ℹ️</span>
+          <span>About</span>
+        </button>
+
+      </nav>
+
+
+      <!-- SIDEBAR FOOTER -->
+      <div class="sidebar-footer">
+
+        <div class="sidebar-status">
+
+          <span class="status-dot"></span>
+
+          <div>
+            <strong>Matching Engine</strong>
+            <small>Ready</small>
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- =======================================================
+         MAIN AREA
+    ======================================================== -->
+
+    <main class="main-container">
+
+
+      <!-- =====================================================
+           TOP BAR
+      ====================================================== -->
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <div class="topbar-title">
+            Product Matcher
+          </div>
+
+          <div class="topbar-subtitle">
+            E-Commerce Product Entity Resolution
+          </div>
+
+        </div>
+
+
+        <div class="topbar-center">
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <button id="quickKeyModalBtn" class="outline-btn header-api-btn" onclick="openApiKeyModal()" title="Configure SerpApi Key for live Google Shopping & Amazon search">
+            <span>🌐</span>
+            <span id="quickKeyLabel">Web Search API</span>
+          </button>
+
+          <div class="topbar-user" id="topbarUserMenuBtn" onclick="openProfileModal()">
+            <div class="user-avatar" id="topbarAvatar">
+              P
+            </div>
+            <div class="user-info">
+              <strong id="topbarUserName">Product Matcher</strong>
+              <small id="topbarUserRole">DSA System Admin</small>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+
+
+      <!-- =====================================================
+           VIEW 1 — HOME
+      ====================================================== -->
+
+      <section id="viewHome" class="app-view">
+
+
+        <!-- HERO -->
+
+        <section class="home-hero-card">
+
+          <div class="home-badge">
+            ⚡ Smart Product Matcher
+          </div>
+
+
+          <h1 class="home-hero-title">
+            Find Products and Match Seller Listings
+          </h1>
+
+
+          <p class="home-hero-sub">
+
+            Identify when different e-commerce listings represent
+            the same product, group them under a single standard product,
+            and compare seller prices using efficient DSA-based
+            matching.
+
+          </p>
+
+
+          <div class="home-quick-actions">
+
+
+            <button class="primary-btn hero-action-btn" id="homeGoSearchBtn" onclick="switchView('products')">
+
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+                <circle cx="11" cy="11" r="8"></circle>
+
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+
+              </svg>
+
+              <span>
+                Search Products
+              </span>
+
+            </button>
+
+
+
+            <button class="outline-btn hero-action-btn" id="homeGoCompareBtn" onclick="switchView('matchListing')">
+
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+                <path d="M12 3v18"></path>
+
+                <path d="M3 12h18"></path>
+
+                <circle cx="12" cy="12" r="9"></circle>
+
+              </svg>
+
+              <span>
+                Match a Listing
+              </span>
+
+            </button>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- FEATURED PRODUCTS SHOWCASE -->
+        <div class="home-catalog-preview">
+          <div class="view-header" style="margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <span class="view-badge">Trending Products</span>
+              <h3 style="margin-top: 6px; font-size: 1.25rem;">Featured Matched Products</h3>
+              <p>Explore high-demand products indexed across Trie prefixes and multi-seller stores.</p>
+            </div>
+            <button class="primary-btn" onclick="switchView('products')">
+              <span>View Full Catalog</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          <div id="homeFeaturedGrid" class="products-grid featured-home-grid">
+            <!-- Dynamically populated or rendered -->
+          </div>
+        </div>
+
+      </section>
+
+
+
+      <!-- =====================================================
+           VIEW 2 — DASHBOARD
+      ====================================================== -->
+
+      <section id="viewDashboard" class="app-view" style="display:none;">
+
+        <div class="view-header">
+
+          <div>
+
+            <span class="view-badge">
+              System Overview
+            </span>
+
+            <h2>
+              Dashboard
+            </h2>
+
+            <p>
+              Quick overview of catalog products, seller listings,
+              and matching activity.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- STAT CARDS -->
+
+        <div class="summary-cards-grid">
+
+
+          <div class="summary-stat-card">
+
+            <div class="stat-card-header">
+
+              <span class="stat-title">
+                Catalog Products
+              </span>
+
+              <span class="stat-icon icon-blue">
+                📦
+              </span>
+
+            </div>
+
+            <div class="stat-value" id="statTotalProducts">
+              12
+            </div>
+
+            <div class="stat-meta">
+              Matched Products
+            </div>
+
+          </div>
+
+
+
+          <div class="summary-stat-card">
+
+            <div class="stat-card-header">
+
+              <span class="stat-title">
+                Seller Listings
+              </span>
+
+              <span class="stat-icon icon-green">
+                🏪
+              </span>
+
+            </div>
+
+            <div class="stat-value" id="statTotalListings">
+              20
+            </div>
+
+            <div class="stat-meta">
+              Available Listings
+            </div>
+
+          </div>
+
+
+
+          <div class="summary-stat-card">
+
+            <div class="stat-card-header">
+
+              <span class="stat-title">
+                Matched
+              </span>
+
+              <span class="stat-icon icon-purple">
+                🔗
+              </span>
+
+            </div>
+
+            <div class="stat-value" id="statMatched">
+              18
+            </div>
+
+            <div class="stat-meta">
+              Successful Matches
+            </div>
+
+          </div>
+
+
+
+          <div class="summary-stat-card">
+
+            <div class="stat-card-header">
+
+              <span class="stat-title">
+                Unmatched
+              </span>
+
+              <span class="stat-icon icon-orange">
+                ⚠️
+              </span>
+
+            </div>
+
+            <div class="stat-value" id="statUnmatched">
+              2
+            </div>
+
+            <div class="stat-meta">
+              Need Review
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DASHBOARD CONTENT -->
+
+        <div class="dashboard-grid">
+
+          <div class="dashboard-card">
+
+
+
+          <div class="dashboard-card">
+
+            <div class="dashboard-card-header">
+
+              <div>
+
+                <h3>
+                  Recent Matches
+                </h3>
+
+                <p>
+                  Recently resolved seller listings.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div id="recentMatches" class="recent-matches">
+
+              <div class="recent-match-item">
+
+                <div class="match-product-icon">
+                  📱
+                </div>
+
+                <div class="match-product-info">
+
+                  <strong>
+                    Apple iPhone 15 Pro
+                  </strong>
+
+                  <small>
+                    Seller listing matched
+                  </small>
+
+                </div>
+
+                <span class="match-score">
+                  94%
+                </span>
+
+              </div>
+
+
+              <div class="recent-match-item">
+
+                <div class="match-product-icon">
+                  🎧
+                </div>
+
+                <div class="match-product-info">
+
+                  <strong>
+                    Sony WH-1000XM5
+                  </strong>
+
+                  <small>
+                    Seller listing matched
+                  </small>
+
+                </div>
+
+                <span class="match-score">
+                  91%
+                </span>
+
+              </div>
+
+
+              <div class="recent-match-item">
+
+                <div class="match-product-icon">
+                  💻
+                </div>
+
+                <div class="match-product-info">
+
+                  <strong>
+                    Apple MacBook Air M3
+                  </strong>
+
+                  <small>
+                    Seller listing matched
+                  </small>
+
+                </div>
+
+                <span class="match-score">
+                  89%
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- DASHBOARD PRODUCTS SHOWCASE -->
+        <div class="dashboard-products-section" style="margin-top: 2rem;">
+          <div class="dashboard-card-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: #fff; margin: 4px 0 2px;">Dashboard Products & Real-Time Tracking</h3>
+              <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Verified matched products currently tracked across e-commerce seller platforms.</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="outline-btn" onclick="switchView('products')">
+                <span>View Full Catalog</span>
+                <span style="font-size: 12px;">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="dashboardProductsGrid" class="products-grid">
+            <!-- Populated with dynamic card-premium-glow product cards -->
+          </div>
+        </div>
+
+      </section>
+
+
+
+      <!-- =====================================================
+           VIEW 3 — PRODUCTS
+      ====================================================== -->
+
+      <section id="viewProducts" class="app-view" style="display:none;">
+
+        <div class="view-header">
+
+          <h2>
+            Products
+          </h2>
+
+          <p>
+            Search the matched product catalog used by
+            Product Matcher.
+          </p>
+
+        </div>
+
+
+
+        <!-- SEARCH -->
+        <section class="product-search-panel">
+          <div class="search-box-wrapper">
+            <div class="search-input-group">
+              <span class="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+              <input type="text" id="productSearchInput" placeholder="Search products, brands or categories (e.g. iPhone, Sony, M3)..." autocomplete="off">
+              <button class="clear-btn" id="clearBtn" title="Clear input" style="display: none;" onclick="clearProductSearch()">✕</button>
+              <button class="search-button" id="searchBtn" onclick="executeSearch(document.getElementById('productSearchInput').value)">
+                <span>Search</span>
+              </button>
+            </div>
+          </div>
+
+
+          <div class="sample-queries">
+
+            <span class="sample-label">
+              Quick Search:
+            </span>
+
+            <button class="chip-btn" onclick="searchProducts('iphone')">
+              iPhone
+            </button>
+
+            <button class="chip-btn" onclick="searchProducts('samsung')">
+              Samsung
+            </button>
+
+            <button class="chip-btn" onclick="searchProducts('macbook')">
+              MacBook
+            </button>
+
+            <button class="chip-btn" onclick="searchProducts('sony')">
+              Sony
+            </button>
+
+            <button class="chip-btn" onclick="searchProducts('logitech')">
+              Logitech
+            </button>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- RESULTS HEADER -->
+
+        <section class="results-header">
+
+          <div class="results-title-group">
+
+            <h3>
+              Product Catalog
+            </h3>
+
+            <span id="resultsCount" class="results-count-badge">
+              12 items
+            </span>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- PRODUCTS GRID -->
+
+        <div id="productsGrid" class="products-grid">
+
+          <!-- Products can be rendered by script.js -->
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- =====================================================
+           VIEW 4 — MATCH LISTING
+      ====================================================== -->
+
+      <section id="viewMatchListing" class="app-view" style="display:none;">
+
+
+        <div class="view-header">
+
+          <span class="view-badge">
+            Entity Resolution
+          </span>
+
+          <h2>
+            Product Matcher
+          </h2>
+
+          <p>
+            Enter a seller listing title and resolve the standard
+            product that it represents.
+          </p>
+
+        </div>
+
+
+
+        <!-- MATCH INPUT -->
+
+        <div class="matcher-panel">
+
+
+          <div class="matcher-panel-header">
+
+            <div>
+
+              <h3>
+                Seller Listing
+              </h3>
+
+              <p>
+                Enter the product title exactly as it appears
+                on a seller listing.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="matcher-input-row">
+
+            <input type="text" id="listingTitleInput" class="matcher-input"
+              placeholder="Example: Apple iPhone15 Pro 128GB Titanium">
+
+
+            <button class="primary-btn" id="findMatchBtn" onclick="findMatch()">
+
+              🔍
+
+              <span>
+                Find Match
+              </span>
+
+            </button>
+
+          </div>
+
+
+
+          <!-- EXAMPLES -->
+
+          <div class="matcher-examples">
+
+            <span>
+              Try:
+            </span>
+
+            <button class="chip-btn" onclick="setListingExample('Apple iPhone15 Pro 128GB Titanium')">
+              iPhone
+            </button>
+
+            <button class="chip-btn" onclick="setListingExample('Samsung Galaxy S24 Ultra 256GB')">
+              Samsung
+            </button>
+
+            <button class="chip-btn" onclick="setListingExample('Sony WH1000XM5 Wireless Headphones')">
+              Sony
+            </button>
+
+            <button class="chip-btn" onclick="setListingExample('Apple MacBook Air M3 Laptop')">
+              MacBook
+            </button>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- MATCH RESULT -->
+
+        <div id="matchResults" class="match-results">
+
+          <div class="empty-match-state">
+
+            <div class="empty-match-icon">
+              🔗
+            </div>
+
+            <h3>
+              No Listing Matched Yet
+            </h3>
+
+            <p>
+              Enter a seller listing above to identify its
+              matched product.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+      </section>
+
+
+
+      <!-- =====================================================
+           VIEW — COMPARE (MULTI-SELLER PRICING & MATRIX)
+      ====================================================== -->
+
+      <section id="viewCompare" class="app-view" style="display:none;">
+
+        <div class="view-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <span class="view-badge">Cross-Seller Comparison</span>
+            <h2>Compare Sellers & Prices</h2>
+            <p>
+              Detailed real-time multi-platform price evaluation and product attribute matrix.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="outline-btn" onclick="switchView('matchListing')">
+              <span>← Back to Matcher</span>
+            </button>
+            <button class="primary-btn" onclick="openApiKeyModal()">
+              <span>🌐 Web Live Search</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- MATCHED PRODUCT HERO PANEL -->
+        <div class="compare-hero-panel">
+          <div class="compare-hero-content">
+            <div class="compare-product-badge">
+              <span class="pulse-dot-green"></span>
+              <span id="compareMatchedBadge">Product Overview</span>
+            </div>
+            <h1 class="compare-hero-title" id="compareCanonicalTitle" style="font-size: 26px; font-weight: 800; margin: 6px 0 8px; color: #fff;">
+              Select a Product
+            </h1>
+            <p class="compare-hero-desc" id="compareCanonicalDesc" style="margin: 0 0 14px; color: #94a3b8; font-size: 14px; line-height: 1.6;">
+              Live cross-seller offers and store prices for this product.
+            </p>
+            <div class="compare-meta-pills">
+              <span class="meta-pill" id="compareMetaCategory">📦 Category: Electronics</span>
+              <span class="meta-pill" id="compareMetaBasePrice">💵 Base Price: ₹0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SELLER CARDS GRID -->
+        <div class="compare-section-header">
+          <div>
+            <h3 style="margin: 0 0 4px; font-size: 1.15rem; color: #fff;">Multi-Seller Live Offers</h3>
+            <p style="margin: 0; font-size: 0.85rem; color: #94a3b8;">Ranked from lowest to highest price using Priority Queue (Min-Heap).</p>
+          </div>
+          <span class="best-deal-counter" id="compareBestDealTag">⭐ Best Deal Highlighted</span>
+        </div>
+
+        <div id="compareSellerCardsGrid" class="compare-cards-grid">
+          <div class="empty-compare-state">
+            <div class="empty-compare-icon">⚖️</div>
+            <h4>No Product Selected Yet</h4>
+            <p>Enter a query in <strong>Product Matcher</strong> or select a product above to inspect seller pricing.</p>
+            <button class="primary-btn" onclick="switchView('matchListing')" style="margin-top: 14px;">Go to Product Matcher →</button>
+          </div>
+        </div>
+
+        <!-- SPECIFICATION & COMPARISON MATRIX -->
+        <div class="compare-matrix-section">
+          <div class="dashboard-card-header" style="margin-bottom: 1rem;">
+            <div>
+              <h3 style="font-size: 1.1rem; color: #fff; margin: 0 0 4px;">Seller Feature Comparison Matrix</h3>
+              <p style="margin: 0; color: #94a3b8; font-size: 0.85rem;">Side-by-side comparison of delivery speeds, warranties, returns, and total savings.</p>
+            </div>
+          </div>
+          <div class="comparison-matrix-wrapper">
+            <table class="comparison-table" id="compareMatrixTable">
+              <thead>
+                <tr>
+                  <th>Platform</th>
+                  <th>Offer Price</th>
+                  <th>Delivery Speed</th>
+                  <th>Return Policy</th>
+                  <th>Warranty</th>
+                  <th>Stock Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="compareMatrixBody">
+                <tr>
+                  <td colspan="7" style="text-align: center; color: #64748b; padding: 2rem;">
+                    Match a product to generate live comparison matrix.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+
+
+      <!-- =====================================================
+           VIEW 5 — ABOUT
+      ====================================================== -->
+
+      <section id="viewAbout" class="app-view" style="display:none;">
+
+
+        <div class="view-header">
+
+          <span class="view-badge">
+            Project Information
+          </span>
+
+          <h2>
+            About Product Matcher
+          </h2>
+
+          <p>
+            E-Commerce Product Entity-Resolution & Matching
+            Platform.
+          </p>
+
+        </div>
+
+
+
+        <!-- ABOUT GRID -->
+
+        <div class="about-grid">
+
+
+          <!-- WHAT IS Product Matcher -->
+
+          <div class="about-card">
+
+            <div class="about-card-icon">
+              📖
+            </div>
+
+            <h3>
+              What is Product Matcher?
+            </h3>
+
+            <p>
+              Product Matcher is an e-commerce product
+              entity-resolution platform developed as a
+              Data Structures and Algorithms project.
+            </p>
+
+            <p>
+              The system identifies when different seller
+              listings refer to the same underlying product
+              and groups them under a single standard product.
+            </p>
+
+          </div>
+
+
+
+          <!-- PROBLEM -->
+
+          <div class="about-card">
+
+            <div class="about-card-icon">
+              🎯
+            </div>
+
+            <h3>
+              Problem Being Solved
+            </h3>
+
+            <p>
+              Different sellers may describe the same product
+              using different titles, spellings, formats,
+              storage sizes, colours, or abbreviations.
+            </p>
+
+            <p>
+              Product Matcher resolves these variations and
+              identifies the most likely matching product.
+            </p>
+
+          </div>
+
+
+
+          <!-- ALGORITHMS -->
+
+          <div class="about-card">
+
+            <div class="about-card-icon">
+              🧠
+            </div>
+
+            <h3>
+              DSA Algorithms Used
+            </h3>
+
+            <ul class="help-list">
+
+              <li>
+                <strong>Trie</strong> — efficient prefix
+                searching and suggestions.
+              </li>
+
+              <li>
+                <strong>Rabin-Karp</strong> — substring
+                pattern matching.
+              </li>
+
+              <li>
+                <strong>Levenshtein DP</strong> — string
+                similarity and spelling variation.
+              </li>
+
+              <li>
+                <strong>Max-Flow</strong> — matching
+                relationships.
+              </li>
+
+              <li>
+                <strong>Priority Queue</strong> — seller
+                price prioritization.
+              </li>
+
+              <li>
+                <strong>Sorting & Searching</strong> —
+                organizing and retrieving results.
+              </li>
+
+            </ul>
+
+          </div>
+
+
+
+          <!-- ARCHITECTURE -->
+
+          <div class="about-card">
+
+            <div class="about-card-icon">
+              ⚙️
+            </div>
+
+            <h3>
+              System Architecture
+            </h3>
+
+            <div class="architecture-flow">
+
+              <div>
+                Seller Listing
+              </div>
+
+              <span>↓</span>
+
+              <div>
+                Text Normalization
+              </div>
+
+              <span>↓</span>
+
+              <div>
+                Candidate Search
+              </div>
+
+              <span>↓</span>
+
+              <div>
+                Similarity Scoring
+              </div>
+
+              <span>↓</span>
+
+              <div>
+                Standard Product
+              </div>
+
+              <span>↓</span>
+
+              <div>
+                Seller Price Comparison
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- TECHNOLOGY -->
+
+          <div class="about-card">
+
+            <div class="about-card-icon">
+              💻
+            </div>
+
+            <h3>
+              Technology
+            </h3>
+
+            <ul class="help-list">
+
+              <li>
+                HTML
+              </li>
+
+              <li>
+                CSS
+              </li>
+
+              <li>
+                JavaScript
+              </li>
+
+              <li>
+                Core Java
+              </li>
+
+              <li>
+                Java HTTP Server
+              </li>
+
+              <li>
+                ArrayList-based product data
+              </li>
+
+            </ul>
+
+          </div>
+
+
+
+          <!-- PROJECT GOAL -->
+
+          <div class="about-card">
+
+            <div class="about-card-icon">
+              🚀
+            </div>
+
+            <h3>
+              Project Goal
+            </h3>
+
+            <p>
+              The goal of Product Matcher is to demonstrate how
+              fundamental data structures and algorithms can
+              be applied to a practical e-commerce problem.
+            </p>
+
+            <p>
+              Instead of treating every seller listing as a
+              separate product, the system discovers the
+              relationship between listings and standard
+              products.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================
+       WEB SEARCH API KEY MODAL DIALOG
+  ========================================================== -->
+  <div id="apiKeyModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #0f1624; border: 1px solid #2b3954; border-radius: 12px; width: 92%; max-width: 520px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); color: #fff;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #222d42; padding-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">🌐</span>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700;">SerpApi Key (Live Web Search)</h3>
+        </div>
+        <button id="closeApiKeyModalBtn" style="background: transparent; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; line-height: 1;">&times;</button>
+      </div>
+
+      <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin-bottom: 16px;">
+        Connect your SerpApi key to search live real-time products across <strong>Google Shopping, Amazon India & Flipkart</strong>, scored dynamically through our DSA pipeline.
+      </p>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">SerpApi Secret Key</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="password" id="modalApiKeyInput" placeholder="Paste your SerpApi key here..." style="flex: 1; padding: 10px 14px; background: #090e18; border: 1px solid #283750; border-radius: 8px; color: #fff; font-family: monospace; font-size: 13px; outline: none;">
+          <button id="modalToggleApiKeyVisBtn" class="outline-btn" style="padding: 0 12px; cursor: pointer;" title="Toggle visibility">👁️</button>
+        </div>
+        <span id="modalApiKeyStatusBadge" style="display: inline-block; margin-top: 8px; font-size: 11px; color: #94a3b8;">
+          • No key saved yet (using local catalog & fallback mock)
+        </span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 20px; border-top: 1px solid #222d42; padding-top: 16px;">
+        <button id="modalClearApiKeyBtn" class="outline-btn" style="color: #f87171; border-color: #552727; cursor: pointer;">Remove Key</button>
+        <button id="modalSaveApiKeyBtn" class="primary-btn" style="cursor: pointer;">Save & Enable Live Search</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       USER PROFILE & API SETTINGS MODAL
+  ========================================================== -->
+  <div id="profileModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #0f1624; border: 1px solid #2b3954; border-radius: 16px; width: 92%; max-width: 500px; padding: 24px; box-shadow: 0 20px 45px rgba(0,0,0,0.65); color: #fff;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid #222d42; padding-bottom: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #06b6d4); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px;">
+            👤
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 17px; font-weight: 700;">User Profile</h3>
+            <span style="font-size: 11px; color: #94a3b8;">Manage profile details & web API integration</span>
+          </div>
+        </div>
+        <button onclick="closeProfileModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.03); border: 1px solid #233047; border-radius: 12px; padding: 14px; margin-bottom: 18px;">
+        <div id="modalUserAvatarBig" style="width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #fff; box-shadow: 0 0 15px rgba(99,102,241,0.35);">
+          P
+        </div>
+        <div style="flex: 1;">
+          <h4 id="profileDisplayName" style="margin: 0 0 4px; font-size: 16px; color: #fff;">Product Matcher</h4>
+          <p id="profileDisplayEmail" style="margin: 0; font-size: 12px; color: #94a3b8;">admin@productmatcher.local</p>
+          <div style="margin-top: 6px; display: flex; gap: 8px;">
+            <span style="font-size: 10px; font-weight: 700; background: rgba(16,185,129,0.15); color: #34d399; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(16,185,129,0.3);">
+              DSA System Admin
+            </span>
+            <span id="profileApiStatusPill" style="font-size: 10px; font-weight: 700; background: rgba(99,102,241,0.15); color: #a5b4fc; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(99,102,241,0.3);">
+              API: Local Mode
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+        <div>
+          <label style="display: block; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+            Display Name
+          </label>
+          <input type="text" id="profileNameInput" placeholder="Enter full name..." value="Product Matcher" style="width: 100%; padding: 10px 14px; background: #090e18; border: 1px solid #283750; border-radius: 8px; color: #fff; font-size: 13px; outline: none;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+            Email Address
+          </label>
+          <input type="email" id="profileEmailInput" placeholder="Enter email address..." value="admin@productmatcher.local" style="width: 100%; padding: 10px 14px; background: #090e18; border: 1px solid #283750; border-radius: 8px; color: #fff; font-size: 13px; outline: none;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+              System Role / Title
+            </label>
+            <input type="text" id="profileRoleInput" placeholder="e.g. Catalog Specialist" value="DSA System Admin" style="width: 100%; padding: 10px 14px; background: #090e18; border: 1px solid #283750; border-radius: 8px; color: #fff; font-size: 13px; outline: none;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+              Avatar Accent Color
+            </label>
+            <select id="profileAvatarColorSelect" style="width: 100%; padding: 10px 14px; background: #090e18; border: 1px solid #283750; border-radius: 8px; color: #fff; font-size: 13px; outline: none; cursor: pointer;">
+              <option value="indigo">Indigo Accent</option>
+              <option value="emerald">Emerald Green</option>
+              <option value="cyan">Cyan Glow</option>
+              <option value="amber">Warm Amber</option>
+              <option value="rose">Rose Red</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 4px;">
+          <button class="primary-btn" onclick="saveProfileDetails()" style="cursor: pointer; padding: 10px 20px;">
+            💾 Save Profile Details
+          </button>
+        </div>
+      </div>
+
+      <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #2b3954; border-radius: 12px; padding: 14px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <strong style="font-size: 13px; color: #fff; display: flex; align-items: center; gap: 6px;">
+            <span>🌐</span> Online Product Search (SerpApi)
+          </strong>
+          <button class="outline-btn" onclick="closeProfileModal(); openApiKeyModal();" style="padding: 4px 10px; font-size: 11px; cursor: pointer;">
+            Configure API Key
+          </button>
+        </div>
+        <p style="margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
+          Enables live querying across Google Shopping, Flipkart, and Amazon India alongside local DSA ranking.
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222d42; padding-top: 16px;">
+        <button class="outline-btn" onclick="closeProfileModal()" style="cursor: pointer;">Close</button>
+        <button class="primary-btn" onclick="closeProfileModal(); openApiKeyModal();" style="background: linear-gradient(135deg, #10b981, #06b6d4); border: none; cursor: pointer;">
+          🔑 Add / Change Web API Key
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" style="display: none; position: fixed; bottom: 24px; right: 24px; background: #1e293b; border: 1px solid #4f46e5; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 10000;">
+  </div>
+
+  <script src="script.js"></script>
+
+
+  <!-- =========================================================
+       BASIC VIEW SWITCHING
+       This also works if script.js does not yet provide it.
+  ========================================================== -->
+
+  <script>
+
+    function switchView(viewName) {
+
+      const views = {
+
+        home: "viewHome",
+
+        dashboard: "viewDashboard",
+
+        products: "viewProducts",
+
+        matchListing: "viewMatchListing",
+
+        compare: "viewCompare",
+
+        about: "viewAbout"
+
+      };
+
+
+      Object.values(views).forEach(function (id) {
+
+        const element =
+          document.getElementById(id);
+
+        if (element) {
+          element.style.display = "none";
+        }
+
+      });
+
+
+      const selectedView =
+        document.getElementById(
+          views[viewName]
+        );
+
+
+      if (selectedView) {
+        selectedView.style.display = "block";
+        if (viewName === 'dashboard' && typeof renderDashboardProducts === 'function') {
+          renderDashboardProducts();
+        }
+      }
+
+
+      document
+        .querySelectorAll(".nav-item")
+        .forEach(function (item) {
+
+          item.classList.remove("active");
+
+        });
+
+
+      const activeNav =
+        document.querySelector(
+          '.nav-item[data-view="' +
+          viewName +
+          '"]'
+        );
+
+
+      if (activeNav) {
+        activeNav.classList.add("active");
+      }
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+
+    function setListingExample(text) {
+
+      const input =
+        document.getElementById(
+          "listingTitleInput"
+        );
+
+      if (input) {
+
+        input.value = text;
+
+        input.focus();
+
+      }
+
+    }
+
+
+
+    function searchProducts(query) {
+
+      switchView("products");
+
+      const input =
+        document.getElementById(
+          "productSearchInput"
+        );
+
+      if (input) {
+
+        input.value = query;
+
+        input.dispatchEvent(
+          new Event("input")
+        );
+
+      }
+
+    }
+
+
+
+    /* Start on Home */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        switchView("home");
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
