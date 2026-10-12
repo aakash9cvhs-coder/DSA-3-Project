@@ -95,7 +95,7 @@ You can also open `frontend/index.html` directly in any browser (the frontend in
 
 ## 🌐 Web Search API Key (Live E-Commerce Search)
 
-NexusMatch supports searching live products across the web using a **SerpApi Key** (Google Shopping / Amazon India / Flipkart):
+Product Matcher supports searching live products across the web using a **SerpApi Key** (Google Shopping / Amazon India / Flipkart):
 1. In the Web UI, open the **Web Search API** section in the sidebar or click the **🔑 API Key** button on the Products page.
 2. Enter your [SerpApi Key](https://serpapi.com) and click **Save & Enable**.
 3. Toggle **🌐 Search Live Web** to search live products from Google Shopping and rank every result through the DSA-3 pipeline (Trie, Levenshtein, Rabin-Karp, Edmonds-Karp).
