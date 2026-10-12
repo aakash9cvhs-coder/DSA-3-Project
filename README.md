@@ -1,4 +1,4 @@
-# NexusMatch - E-Commerce Entity Matcher & Search Engine (DSA-3 Project)
+# Product Matcher - E-Commerce Entity Matcher & Search Engine (DSA-3 Project)
 
 A complete e-commerce entity matching and search application built from scratch for DSA-3, powered by custom data structures and algorithms with zero third-party dependencies.
 
